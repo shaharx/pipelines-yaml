@@ -1,0 +1,72 @@
+resources:
+  - name: artifactory_go_example
+    type: GitRepo
+    configuration:
+      path: balajils1/artifactory-go-example
+      gitProvider: balaji
+  - name: go_build_info
+    type: BuildInfo
+    configuration:
+      sourceArtifactory: Art1
+      buildName: go_example_build
+      buildNumber: 4
+  - name: files
+    type: FileSpec
+    configuration:
+      sourceArtifactory: Art1
+      pattern: generic-local/*
+ 
+pipelines:
+  - name: go_example_build
+    steps:
+      - name: build_go
+        type: GoBuild
+        configuration:
+          runtime: 
+            type: image
+            image:
+              auto:
+                language: go
+                versions:
+                  - 1.12.5
+          sourceLocation: .
+          repository: go
+          outputLocation: /tmp/dist
+          outputFile: hello
+          inputResources:
+            - name: artifactory_go_example
+            - name: files
+          integrations:
+            - name: Art1
+        execution:
+          onStart:
+            - wget https://dl.google.com/go/go1.12.5.linux-amd64.tar.gz
+            - sudo tar -C /usr/local -xzf go1.12.5.linux-amd64.tar.gz
+            - export PATH=$PATH:/usr/local/go/bin
+            - go version
+      - name: scan
+        type: XrayScan
+        configuration:
+          #inherits from bash
+          inputResources:
+            - name: go_build_info
+              trigger: true
+          waitUntilFinish: true  # default true
+             # required
+      - name: push_go_binary
+        type: GoPublishBinary
+        configuration:
+          targetRepository: generic-local
+          integrations:
+            - name: Art1
+          inputSteps:
+            - name: build_go
+      - name: publish_go_build
+        type: PublishBuildInfo
+        configuration:
+          #integrations:
+            #- name: Art1
+          inputSteps:
+            - name: push_go_binary
+          outputResources:
+            - name: go_build_info
