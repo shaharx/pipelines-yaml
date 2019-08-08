@@ -2,7 +2,7 @@ resources:
   - name: npmHelloWorld_repo
     type: GitRepo
     configuration:
-      gitProvider: balaji
+      gitProvider: batelt
       path: balajils1/Sampleproject
   - name: helloworld_build_info
     type: BuildInfo
