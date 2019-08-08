@@ -11,7 +11,7 @@ resources:
     type: GitRepo
     configuration:
       gitProvider:  batel
-      path: balajils1/project-examples
+      path: batel/project-examples
  
 pipelines:
   - name: mvn_example_build
