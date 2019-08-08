@@ -10,7 +10,7 @@ resources:
   - name: project_example
     type: GitRepo
     configuration:
-      gitProvider:  balaji
+      gitProvider:  batel
       path: balajils1/project-examples
  
 pipelines:
