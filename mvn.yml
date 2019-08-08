@@ -11,7 +11,7 @@ resources:
     type: GitRepo
     configuration:
       gitProvider:  batel
-      path: batel/project-examples
+      path: batelt/project-examples
  
 pipelines:
   - name: mvn_example_build
