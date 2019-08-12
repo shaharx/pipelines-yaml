@@ -2,7 +2,7 @@ resources:
   - name: npmHelloWorld_repo
     type: GitRepo
     configuration:
-      gitProvider: batel
+      gitProvider: github
       path: BatelT/Sampleproject
   - name: helloworld_build_info
     type: BuildInfo
