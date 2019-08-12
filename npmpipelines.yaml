@@ -3,7 +3,7 @@ resources:
     type: GitRepo
     configuration:
       gitProvider: github
-      path: BatelT/Sampleproject
+      path: shaharx/Sampleproject
   - name: helloworld_build_info
     type: BuildInfo
     configuration:
